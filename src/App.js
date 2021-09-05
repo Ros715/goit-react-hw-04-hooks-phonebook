@@ -4,18 +4,13 @@ import Filter from "./components/Filter/Filter.js";
 import ContactList from "./components/ContactList/ContactList.js";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
+import useLocalStorage from "./components/hooks/useLocalStorage.js";
 
 function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(window.localStorage.getItem("phonebook")) ?? [];
-  });
+  const [contacts, setContacts] = useLocalStorage("phonebook", []);
   const [filter, setFilter] = useState(() => {
     return "";
   });
-
-  useEffect(() => {
-    window.localStorage.setItem("phonebook", JSON.stringify(contacts));
-  }, [contacts]);
 
   const onAddContact = (name, number) => {
     const selectedContact = contacts.filter((contact) => {
