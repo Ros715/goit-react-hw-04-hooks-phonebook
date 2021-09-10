@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState /*, useEffect*/ } from "react";
 import ContactForm from "./components/ContactForm/ContactForm.js";
 import Filter from "./components/Filter/Filter.js";
 import ContactList from "./components/ContactList/ContactList.js";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
-import useLocalStorage from "./components/hooks/useLocalStorage.js";
+import useLocalStorage from "./hooks/useLocalStorage.js";
 
 function App() {
   const [contacts, setContacts] = useLocalStorage("phonebook", []);
@@ -19,19 +19,9 @@ function App() {
     if (selectedContact.length > 0) {
       alert(name + " is already in contacts");
     } else {
-      const id = uuidv4();
-      //console.log(contacts);
-      const newList = contacts.filter((contact) => {
-        return true;
-      });
-      //console.log(newList);
-      newList.push({
-        id: id,
-        name: name,
-        number: number,
-      });
-      setContacts(newList);
-      //console.log(newList);
+      setContacts(
+        contacts.concat({ id: uuidv4(), name: name, number: number })
+      );
     }
   };
 
